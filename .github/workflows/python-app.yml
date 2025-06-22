@@ -1,0 +1,23 @@
+# .github/workflows/python-app.yml
+name: Run Python Script
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # allows manual trigger from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.14'  # You can change this as needed
+
+    - name: Run the script
+      run: python main.py
