@@ -1,5 +1,38 @@
-- name: Upload HTML report
-  uses: actions/upload-artifact@v4
-  with:
-    name: html-execution-report
-    path: final_report.html
+name: Run Python Scripts Sequentially
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4.3.2
+        with:
+          python-version: '3.11'
+
+      - name: Run all Python scripts sequentially and generate HTML report
+        run: |
+          echo "<html><body><h1>Execution Report</h1>" > final_report.html
+          for script in script1.py script2.py script3.py script4.py; do
+            echo "<h2>Running $script</h2>" >> final_report.html
+            echo '<pre>' >> final_report.html
+            if output=$(python $script 2>&1); then
+              echo "$output" >> final_report.html
+            else
+              echo "$output" >> final_report.html
+            fi
+            echo '</pre>' >> final_report.html
+          done
+          echo "</body></html>" >> final_report.html
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-execution-report
+          path: final_report.html
