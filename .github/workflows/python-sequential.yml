@@ -14,18 +14,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4.3.2
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
-      - name: Run all Python scripts sequentially and generate HTML report
+      - name: Run all Python scripts through run_all.py
         run: |
-          echo "<html><body><h1>Execution Report</h1>" > final_report.html
-          for script in script1.py script2.py script3.py script4.py; do
-            echo "<h2>Running $script</h2>" >> final_report.html
-            echo "<pre>" >> final_report.html
-            python $script >> final_report.html 2>&1
-            echo "</pre>" >> final_report.html
-          done
-          echo "</body></html>" >> final_report.html
+          python run_all.py
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
