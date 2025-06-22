@@ -21,13 +21,9 @@ jobs:
           echo "<html><body><h1>Execution Report</h1>" > final_report.html
           for script in script1.py script2.py script3.py script4.py; do
             echo "<h2>Running $script</h2>" >> final_report.html
-            echo '<pre>' >> final_report.html
-            if output=$(python $script 2>&1); then
-              echo "$output" >> final_report.html
-            else
-              echo "$output" >> final_report.html
-            fi
-            echo '</pre>' >> final_report.html
+            echo "<pre>" >> final_report.html
+            python $script >> final_report.html 2>&1
+            echo "</pre>" >> final_report.html
           done
           echo "</body></html>" >> final_report.html
 
